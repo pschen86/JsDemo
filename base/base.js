@@ -37,7 +37,9 @@ var  $ = function(){
 function Base() {
 
     //没有了this，内部的所有调用时都不能访问到
+    //在这里this代表着Base函数的实例化对象
     this.elements = [];   //放在这里，作为私有属性，每个new对象都有自己的节点数组
+    //alert(this);
 
 
 
@@ -88,6 +90,8 @@ Base.prototype.getElement = function(num){
     this.elements.push(element);
     return this;
 }
+
+Base.prototype.getInner = 
 
 //设置CSS
 Base.prototype.css = function(attr,value){
@@ -142,4 +146,100 @@ Base.prototype.hide = function(){
     }
     return this;
 
+}
+
+//设置窗口居中
+Base.prototype.Wcenter = function(topwidth,leftwidth){
+    var top = (document.documentElement.clientHeight - topwidth) / 2;
+    var left = (document.documentElement.clientWidth - leftwidth) / 2;
+    // alert(top);
+    // alert(left);
+    // return;
+    for(var i = 0; i < this.elements.length; i++){
+        this.elements[i].style.top = top + 'px';
+        this.elements[i].style.left = left + 'px';
+    }
+    return this;
+}
+
+//遮罩效果
+Base.prototype.Wlock = function(){
+    for(var i = 0; i < this.elements.length; i++){
+        this.elements[i].style.width = document.documentElement.clientWidth + 'px';
+        this.elements[i].style.height = document.documentElement.clientHeight + 'px';
+        this.elements[i].style.display = 'block';
+    }
+    return this;
+}
+//关闭遮罩效果
+Base.prototype.Wunlock = function(){
+    for(var i = 0; i < this.elements.length; i++){
+        this.elements[i].style.display = 'none';
+    }
+    return this;
+}
+
+//弹出窗口拖动效果
+Base.prototype.Wdrag = function(){
+    for(var i = 0; i < this.elements.length; i++){
+        this.elements[i].onmousedown = function(e){
+            var e = event || window.event;
+            var _this = this;  //this指向this.elements[i]对象
+            var diffX = e.clientX - _this.offsetLeft;
+            var diffY = e.clientY - _this.offsetTop;
+            // var diffX = e.clientX - this.elements[i].offsetLeft;
+            // var diffY = e.clientY - this.elements[i].offsetTop;
+    
+            document.onmousemove = function(e){
+                var e = e || window.event;
+                var left = e.clientX - diffX;
+                var top = e.clientY - diffY;
+                // console.log(window.innerWidth);
+                // console.log(_this.offsetHeight);
+                // if(left < 0){
+                //     left = 0;
+                // }else if(left > getInner.width - _this.offsetWidth){
+                //     // left = window.innerWidth - _this.offsetWidth;
+                // }
+                if(left < 0){
+                    left = 0;
+                }else if(left > document.documentElement.clientWidth - _this.offsetWidth){
+                    // left = window.innerWidth - _this.offsetWidth;
+                    left = document.documentElement.clientWidth - _this.offsetWidth;
+                }
+                // if(top < 0){
+                //     top = 0;
+                // }else if(top > window.innerHeight - _this.offsetHeight){
+                //     // top = window.innerHeight - _this.offsetHeight;
+                // }
+                if(top < 0){
+                    top = 0;
+                }else if(top > document.documentElement.clientHeight - _this.offsetHeight){
+                    // top = window.innerWidth - _this.offsetHeight;
+                    top = document.documentElement.clientHeight - _this.offsetHeight;
+                }
+                _this.style.left = left + 'px';
+                _this.style.top = top + 'px';
+            }
+            document.onmouseup = function(){
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+        
+    }
+    return this;
+}
+
+
+//触发点击事件
+Base.prototype.click = function(fn){
+    for(var i = 0; i < this.elements.length; i++){
+        this.elements[i].onclick = fn;
+    }
+    return this;
+}
+//浏览器弹出窗口事件
+Base.prototype.resize = function(fn){
+    window.onresize = fn;
 }
