@@ -61,12 +61,19 @@ window.onload = function(){
     // window.event
 
     // e.clientX;//点击的点到浏览器边的距离
-    // login.offsetLeft //窗口边到浏览器边的距离
-    // e.clientX - login.offsetLeft  //点击点到窗口边的距离
+    // login.offsetLeft //弹出的登陆窗口的边到浏览器边的距离
+    // e.clientX - login.offsetLeft  //点击点到弹出的登陆窗口的边的距离
     $().getId('login').Wdrag();
 
-    alert(document.documentElement.clientHeight);
-    alert(window.clientHeight);
+
+
+
+    // alert(document.documentElement.clientHeight);
+    // alert(window.innerHeight);
+
+    //IE8以下支持获取CSS样式内容
+    //alert(document.getElementById('screen').currentStyle['backgroundColor']);
+
 
     //$();
 }

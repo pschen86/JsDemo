@@ -27,6 +27,10 @@ window.onload = function(){
     // alert($().getName('sex')[0].value);
     // alert($().getTagName('p')[0].innerHTML);
 
+    // alert(document);  //HTMLdocument  IE:object
+    // alert(document.childNodes[0]);  //documentType  IE:object
+    alert(document.childNodes[5].nodeType);  //10  IE:8
+    alert(document.childNodes[5].nodeName);  //html  IE:#comment
 }
 
 

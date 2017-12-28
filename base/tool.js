@@ -1,11 +1,11 @@
 function getInner(){
     if(typeof window.innerWidth !='undefined'){
-        return {
+        return {  //W3C
             width : window.innerWidth,
-            height : window.innerHeight
+            height : window.innerHeight  
         };
     } else {
-        return {
+        return {  //IE
             width : document.documentElement.clientWidth,
             height : document.documentElement.clientHeight
         }

@@ -91,7 +91,6 @@ Base.prototype.getElement = function(num){
     return this;
 }
 
-Base.prototype.getInner = 
 
 //设置CSS
 Base.prototype.css = function(attr,value){
